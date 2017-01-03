@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_principal"
+
+            android:title="Principal" />
+
+        <item
+            android:id="@+id/nav_recycler"
+
+            android:title="Films ordered by year" />
+
+        <item
+            android:id="@+id/nav_create"
+
+            android:title="Add new film" />
+
+        <item
+            android:id="@+id/nav_searchT"
+
+            android:title="Search film by title" />
+
+        <item
+            android:id="@+id/nav_searchA"
+
+            android:title="Search film by actor/actress" />
+        <item
+            android:id="@+id/nav_rate"
+
+            android:title="Modify rate" />
+        <item
+            android:id="@+id/nav_manage"
+
+            android:title="Tools" />
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_help"
+
+                android:title="Help" />
+            <item
+                android:id="@+id/nav_about"
+
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>
+
