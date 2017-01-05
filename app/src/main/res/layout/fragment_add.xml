@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.victor.prueba.AddFragment">
+
+
+    <EditText
+        android:id="@+id/addTitle"
+        android:hint = "Title"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/addCountry"
+        android:hint = "Country"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/addTitle"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/addYear"
+        android:hint = "Year"
+        android:inputType="number"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/addDirector"
+        android:layout_alignStart="@+id/addDirector" />
+
+    <EditText
+        android:id="@+id/addProtagonist"
+        android:hint = "Protagonist"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/addCountry"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/addDirector"
+        android:hint = "Director"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <RatingBar
+        android:id="@+id/addRating"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:stepSize="0.5"
+        android:theme = "@style/RatingBar"
+        android:numStars="5"
+        android:isIndicator="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:layout_below="@+id/addYear"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="OK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnOk"
+        android:onClick="onClick (AddFragment)"
+        android:layout_below="@+id/addProtagonist"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

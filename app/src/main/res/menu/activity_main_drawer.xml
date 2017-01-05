@@ -4,36 +4,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_principal"
-
-            android:title="Principal" />
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
 
         <item
             android:id="@+id/nav_recycler"
-
-            android:title="Films ordered by year" />
+            android:icon="@drawable/ic_283226"
+            android:title="Films database" />
 
         <item
             android:id="@+id/nav_create"
-
+            android:icon="@drawable/ic_1854"
             android:title="Add new film" />
 
         <item
             android:id="@+id/nav_searchT"
-
+            android:icon="@drawable/ic_search_black_24dp"
             android:title="Search film by title" />
 
         <item
             android:id="@+id/nav_searchA"
-
+            android:icon="@drawable/ic_search_black_24dp"
             android:title="Search film by actor/actress" />
-        <item
-            android:id="@+id/nav_rate"
-
-            android:title="Modify rate" />
-        <item
-            android:id="@+id/nav_manage"
-
-            android:title="Tools" />
     </group>
 
     <item android:title="Other">
