@@ -26,7 +26,9 @@ import java.util.List;
  */
 public class SearchFragment extends Fragment {
     private FilmData filmData;
-    ListView lw;
+    private ListView lw;
+    private titleRatingListAdapter adapter;
+    private List<titleRating> mTitleRatingList;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -65,19 +67,20 @@ public class SearchFragment extends Fragment {
                 filmData.getAllFilms();
 
                 List<Film> films = filmData.searchByActor(query);
-                List<String> titles = new ArrayList<>();
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_list_item_1, titles);
-                lw.setAdapter(adapter);
+                mTitleRatingList = new ArrayList<>();
 
                 SearchFragment.orderByTitle(films);
-                adapter.clear();
+                mTitleRatingList.clear();
                 for (int i=0; i<films.size(); ++i) {
-                    adapter.add(films.get(i).getTitle());
+                    //System.out.println((float) films.get(i).getCritics_rate());
+                    mTitleRatingList.add(new titleRating(i+1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate()));
                 }
 
-                searchView.setQuery("", true);
+                adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList);
+
+                lw.setAdapter(adapter);
+
+                searchView.setQuery("", false);
                 //searchView.setIconified(true);
                 return true;
             }

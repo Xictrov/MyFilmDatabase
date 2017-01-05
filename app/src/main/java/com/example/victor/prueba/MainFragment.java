@@ -7,7 +7,11 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,8 +23,11 @@ import java.util.Random;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends ListFragment {
+public class MainFragment extends Fragment {
     private FilmData filmData;
+    private ListView lw;
+    private titleRatingListAdapter adapter;
+    private List<titleRating> mTitleRatingList;
 
 
     public MainFragment() {
@@ -33,29 +40,6 @@ public class MainFragment extends ListFragment {
 
         filmData = new FilmData(getActivity().getApplicationContext());
         filmData.open();
-
-        List<Film> values = filmData.getAllFilms();
-        List<String> titles = new ArrayList<>();
-        // use the SimpleCursorAdapter to show the
-        // elements in a ListView
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, titles);
-        setListAdapter(adapter);
-
-        if (values.size() == 0) {
-            String[] newFilm = new String[]{"Toy Story", "John Lasseter", "Rocky Horror Picture Show", "Jim Sharman", "The Godfather", "Francis Ford Coppola", "Blade Runner", "Ridley Scott"};
-            for (int i = 0; i < newFilm.length; i += 2) {
-                // save the new film to the database
-                filmData.createFilm(newFilm[i], newFilm[i + 1], "Spain", 2014, "Victor Hervas", (float) 0.5);
-            }
-         }
-
-        values = filmData.getAllFilms();
-        MainFragment.orderByTitle(values);
-        adapter.clear();
-        for (int i=0; i<values.size(); ++i) {
-            adapter.add(values.get(i).getTitle());
-        }
 
     }
 
@@ -84,7 +68,40 @@ public class MainFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View v = inflater.inflate(R.layout.fragment_main, container, false);
+        lw = (ListView) v.findViewById(R.id.listHome);
+
+        mTitleRatingList = new ArrayList<>();
+
+        List<Film> values = filmData.getAllFilms();
+
+        if (values.size() == 0) {
+            String[] newFilm = new String[]{"Toy Story", "John Lasseter", "Rocky Horror Picture Show", "Jim Sharman", "The Godfather", "Francis Ford Coppola", "Blade Runner", "Ridley Scott"};
+            for (int i = 0; i < newFilm.length; i += 2) {
+                // save the new film to the database
+                filmData.createFilm(newFilm[i], newFilm[i + 1], "Spain", 2014, "Victor Hervas", (float) 3);
+            }
+        }
+
+        values = filmData.getAllFilms();
+        MainFragment.orderByTitle(values);
+        mTitleRatingList.clear();
+        for (int i=0; i<values.size(); ++i) {
+            mTitleRatingList.add(new titleRating(i+1, values.get(i).getTitle(), (float) values.get(i).getCritics_rate()));
+        }
+
+        adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList);
+
+        lw.setAdapter(adapter);
+
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "Clicked" + view.getTag(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return v;
     }
 
 }

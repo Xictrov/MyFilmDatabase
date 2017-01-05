@@ -126,7 +126,8 @@ public class FilmData {
         film.setDirector(cursor.getString(2));
         film.setProtagonist(cursor.getString(3));
         film.setYear(cursor.getInt(4));
-        film.setCritics_rate(cursor.getInt(5));
+        film.setCountry(cursor.getString(5));
+        film.setCritics_rate(cursor.getInt(6));
         return film;
     }
 }
