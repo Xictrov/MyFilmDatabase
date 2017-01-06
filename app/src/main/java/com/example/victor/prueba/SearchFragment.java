@@ -1,6 +1,7 @@
 package com.example.victor.prueba;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -64,8 +66,6 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(getContext(), R.string.submitted, Toast.LENGTH_SHORT).show();
 
-                filmData.getAllFilms();
-
                 List<Film> films = filmData.searchByActor(query);
                 mTitleRatingList = new ArrayList<>();
 
@@ -73,15 +73,17 @@ public class SearchFragment extends Fragment {
                 mTitleRatingList.clear();
                 for (int i=0; i<films.size(); ++i) {
                     //System.out.println((float) films.get(i).getCritics_rate());
-                    mTitleRatingList.add(new titleRating(i+1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate()));
+                    mTitleRatingList.add(new titleRating(i+1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate(), films.get(i).getId()));
                 }
 
-                adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList);
+                adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
 
                 lw.setAdapter(adapter);
 
                 searchView.setQuery("", false);
                 //searchView.setIconified(true);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 return true;
             }
 

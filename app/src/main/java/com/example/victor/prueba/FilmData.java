@@ -102,6 +102,29 @@ public class FilmData {
         return fp;
     }
 
+    public void changeCriticsRate(long filmId, Float criticsRate) {
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, null,
+                MySQLiteHelper.COLUMN_ID + "= '" + filmId+"'", null, null, null, null);
+
+        ContentValues values = new ContentValues();
+        cursor.moveToFirst();
+        int i = 0;
+        while (!cursor.isAfterLast()) {
+            values.put(MySQLiteHelper.COLUMN_TITLE, cursor.getString(1));
+            values.put(MySQLiteHelper.COLUMN_DIRECTOR, cursor.getString(4));
+            values.put(MySQLiteHelper.COLUMN_COUNTRY, cursor.getString(2));
+            values.put(MySQLiteHelper.COLUMN_YEAR_RELEASE, cursor.getInt(3));
+            values.put(MySQLiteHelper.COLUMN_PROTAGONIST, cursor.getString(5));
+            values.put(MySQLiteHelper.COLUMN_CRITICS_RATE, criticsRate);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+
+        database.update(MySQLiteHelper.TABLE_FILMS,values,
+                MySQLiteHelper.COLUMN_ID + "= '" + filmId+"'",null);
+    }
+
     public List<Film> getAllFilms() {
         List<Film> comments = new ArrayList<>();
 
@@ -123,10 +146,10 @@ public class FilmData {
         Film film = new Film();
         film.setId(cursor.getLong(0));
         film.setTitle(cursor.getString(1));
-        film.setDirector(cursor.getString(2));
-        film.setProtagonist(cursor.getString(3));
-        film.setYear(cursor.getInt(4));
-        film.setCountry(cursor.getString(5));
+        film.setDirector(cursor.getString(4));
+        film.setProtagonist(cursor.getString(5));
+        film.setYear(cursor.getInt(3));
+        film.setCountry(cursor.getString(2));
         film.setCritics_rate(cursor.getInt(6));
         return film;
     }

@@ -16,12 +16,14 @@ import java.util.List;
 public class titleRatingListAdapter extends BaseAdapter {
     private Context mContext;
     private List<titleRating> mTitleRatingList;
+    private FilmData filmdata;
 
     //Constructor
 
-    public titleRatingListAdapter(Context mcontext, List<titleRating> mTitleRatingList) {
+    public titleRatingListAdapter(Context mcontext, List<titleRating> mTitleRatingList, FilmData filmdata) {
         this.mContext = mcontext;
         this.mTitleRatingList = mTitleRatingList;
+        this.filmdata = filmdata;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class titleRatingListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = View.inflate(mContext, R.layout.item_list, null);
         TextView vFilmTitle = (TextView) v.findViewById(R.id.filmTitle);
         RatingBar vFilmRating = (RatingBar) v.findViewById(R.id.filmRating);
@@ -48,6 +50,12 @@ public class titleRatingListAdapter extends BaseAdapter {
         vFilmTitle.setText(mTitleRatingList.get(position).getFilmTitle());
         vFilmRating.setRating(mTitleRatingList.get(position).getRate());
 
+        vFilmRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                filmdata.changeCriticsRate(mTitleRatingList.get(position).getFilmId(),rating);
+            }
+        });
 
         v.setTag(mTitleRatingList.get(position).getItemId());
         return v;
