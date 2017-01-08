@@ -87,19 +87,19 @@ public class MainFragment extends Fragment {
         MainFragment.orderByTitle(values);
         mTitleRatingList.clear();
         for (int i=0; i<values.size(); ++i) {
-            mTitleRatingList.add(new titleRating(i+1, values.get(i).getTitle(), (float) values.get(i).getCritics_rate()));
+            mTitleRatingList.add(new titleRating(i+1, values.get(i).getTitle(), (float) values.get(i).getCritics_rate(), values.get(i).getId()));
         }
 
-        adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList);
+        adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
 
         lw.setAdapter(adapter);
 
-        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "Clicked" + view.getTag(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         return v;
     }
