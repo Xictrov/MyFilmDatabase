@@ -23,7 +23,7 @@ import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NavigationView.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -153,8 +153,5 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }

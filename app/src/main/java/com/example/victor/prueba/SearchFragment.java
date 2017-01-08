@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class SearchFragment extends Fragment {
     private ListView lw;
     private titleRatingListAdapter adapter;
     private List<titleRating> mTitleRatingList;
+    private RelativeLayout layout;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -47,7 +50,16 @@ public class SearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         lw = (ListView) view.findViewById(R.id.listsearch);
-
+        layout = (RelativeLayout) view.findViewById(R.id.searchLayout);
+        layout.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev)
+            {
+                hideKeyboard(view);
+                return false;
+            }
+        });
 
         setHasOptionsMenu(true);
 
@@ -64,7 +76,6 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getContext(), R.string.submitted, Toast.LENGTH_SHORT).show();
 
                 List<Film> films = filmData.searchByActor(query);
                 mTitleRatingList = new ArrayList<>();
@@ -97,8 +108,8 @@ public class SearchFragment extends Fragment {
 
 
         //check http://stackoverflow.com/questions/11085308/changing-the-background-drawable-of-the-searchview-widget
-        /*View searchPlate = (View) searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
-        searchPlate.setBackgroundResource(R.mipmap.textfield_custom);*/
+        //View searchPlate = (View) searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
+        //searchPlate.setBackgroundResource(R.mipmap.textfield_custom);
 
 
 
@@ -111,6 +122,12 @@ public class SearchFragment extends Fragment {
             }
         }
         Collections.sort(lf, new ComparatorFilms());
+    }
+
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 

@@ -12,7 +12,8 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/addCountry" />
 
     <EditText
         android:id="@+id/addCountry"
@@ -47,6 +48,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:text="Add Film"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnOk"
+        android:onClick="onClick (AddFragment)"
+        android:layout_below="@+id/addRating"
+        android:layout_alignParentStart="true" />
+
     <RatingBar
         android:id="@+id/addRating"
         android:layout_width="wrap_content"
@@ -57,17 +67,10 @@
         android:isIndicator="false"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        style="@style/Widget.AppCompat.RatingBar"
         android:layout_below="@+id/addYear"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="OK"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnOk"
-        android:onClick="onClick (AddFragment)"
-        android:layout_below="@+id/addProtagonist"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/addProtagonist" />
 
 </RelativeLayout>

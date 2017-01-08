@@ -83,8 +83,12 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         filmData.createFilm(title.getText().toString(), director.getText().toString(),
                 country.getText().toString(), Integer.parseInt(year.getText().toString()),
                 protagonist.getText().toString(), rate.getRating());
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        title.setText("");
+        director.setText("");
+        country.setText("");
+        year.setText("");
+        protagonist.setText("");
+        rate.setRating(0);
         Toast.makeText(getContext(), "Film added!", Toast.LENGTH_SHORT).show();
     }
 

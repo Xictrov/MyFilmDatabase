@@ -77,8 +77,7 @@ public class FilmData {
         return newFilm;
     }
 
-    public void deleteFilm(Film film) {
-        long id = film.getId();
+    public void deleteFilm(long id) {
         System.out.println("Film deleted with id: " + id);
         database.delete(MySQLiteHelper.TABLE_FILMS, MySQLiteHelper.COLUMN_ID
                 + " = " + id, null);

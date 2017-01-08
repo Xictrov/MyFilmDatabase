@@ -94,12 +94,12 @@ public class MainFragment extends Fragment {
 
         lw.setAdapter(adapter);
 
-        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "Clicked" + view.getTag(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         return v;
     }
