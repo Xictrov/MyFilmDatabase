@@ -1,6 +1,8 @@
 package com.example.victor.prueba;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -20,13 +22,16 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
     private LayoutInflater inflater;
-    Context context;
-    List<Film> films = Collections.emptyList();
+    private Context context;
+    private List<Film> films = Collections.emptyList();
+    private FilmData filmData;
 
-    public RecyclerAdapter(Context context, List<Film> filmList){
+    public RecyclerAdapter(Context context, List<Film> filmList, FilmData filmData){
         inflater=LayoutInflater.from(context);
         this.films = filmList;
         this.context = context;
+        this.filmData = filmData;
+
 
     }
 
@@ -56,8 +61,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return films.size();
     }
 
-    public void delete(int position){
+    public void delete(int position, long Id){
         films.remove(position);
+        filmData.deleteFilm(Id);
         notifyItemRemoved(position);
     }
 
@@ -80,7 +86,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         @Override
         public void onClick(View v) {
-            delete(getPosition());
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Do you really want to delete this film?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            delete(getPosition(),films.get(getPosition()).getId());
+
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            builder.show();
         }
     }
 }

@@ -45,10 +45,20 @@ public class RecyclerFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         MyRecyclerView.setLayoutManager(mLayoutManager);
-        List<Film> films = filmData.getAllFilms();
 
+        List<Film> films = filmData.getAllFilms();
+        RecyclerFragment.orderByYear(films);
+        /*System.out.println(films.get(0).getYear());
+        System.out.println(films.get(1).getYear());
+        System.out.println(films.get(2).getYear());
+        System.out.println(films.get(3).getYear());
+        System.out.println(films.get(4).getYear());
+        System.out.println(films.get(5).getYear());*/
+
+        mFilmList.clear();
         for (int i=0; i<films.size(); ++i) {
             Film filmi = new Film();
+            filmi.setId(films.get(i).getId());
             filmi.setTitle(films.get(i).getTitle());
             filmi.setDirector(films.get(i).getDirector());
             filmi.setCountry(films.get(i).getCountry());
@@ -58,8 +68,7 @@ public class RecyclerFragment extends Fragment {
             mFilmList.add(filmi);
         }
 
-        orderByYear(mFilmList);
-        mAdapter = new RecyclerAdapter(getContext(),mFilmList);
+        mAdapter = new RecyclerAdapter(getContext(),mFilmList,filmData);
         MyRecyclerView.setAdapter(mAdapter);
         return v;
     }
@@ -67,8 +76,7 @@ public class RecyclerFragment extends Fragment {
     private static void orderByYear(List<Film> lf) {
         class ComparatorFilms implements Comparator<Film> {
             public int compare(Film a, Film b) {
-
-                return (b.getYear())-a.getYear();
+                return b.getYear()-a.getYear();
             }
         }
         Collections.sort(lf, new ComparatorFilms());
