@@ -43,17 +43,12 @@ public class RecyclerFragment extends Fragment {
         MyRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view);
         MyRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         MyRecyclerView.setLayoutManager(mLayoutManager);
 
         List<Film> films = filmData.getAllFilms();
         RecyclerFragment.orderByYear(films);
-        /*System.out.println(films.get(0).getYear());
-        System.out.println(films.get(1).getYear());
-        System.out.println(films.get(2).getYear());
-        System.out.println(films.get(3).getYear());
-        System.out.println(films.get(4).getYear());
-        System.out.println(films.get(5).getYear());*/
+
 
         mFilmList.clear();
         for (int i=0; i<films.size(); ++i) {
@@ -68,7 +63,7 @@ public class RecyclerFragment extends Fragment {
             mFilmList.add(filmi);
         }
 
-        mAdapter = new RecyclerAdapter(getContext(),mFilmList,filmData);
+        mAdapter = new RecyclerAdapter(getActivity(),mFilmList,filmData);
         MyRecyclerView.setAdapter(mAdapter);
         return v;
     }

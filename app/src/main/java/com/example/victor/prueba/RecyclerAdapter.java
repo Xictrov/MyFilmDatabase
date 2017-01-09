@@ -1,9 +1,11 @@
 package com.example.victor.prueba;
 
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
