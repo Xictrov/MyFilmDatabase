@@ -24,8 +24,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/directorR"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
         android:id="@+id/yearR"
         android:text="Year"
         android:focusableInTouchMode="false"
@@ -35,26 +36,14 @@
         android:maxWidth="250dp"
         android:textColor="#000"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp"
-        android:layout_above="@+id/countryR"
-        android:id="@+id/directorR"
-        android:text="Director"
-        android:focusableInTouchMode="false"
-        android:clickable="false"
-        android:focusable="false"
-        android:textSize="18sp"
-        android:maxWidth="250dp"
-        android:textColor="#000"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2.5px"
+        android:background="#C0C0C0"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/titleR"
         android:id="@+id/countryR"
         android:text="Country"
         android:focusableInTouchMode="false"
@@ -62,22 +51,24 @@
         android:focusable="false"
         android:textSize="18sp"
         android:maxWidth="250dp"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:layout_alignBaseline="@+id/directorR"
+        android:layout_alignBottom="@+id/directorR"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/yearR"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/ratingR"
         android:id="@+id/protagonistR"
         android:text="Protagonist"
         android:focusableInTouchMode="false"
         android:clickable="false"
         android:focusable="false"
         android:textSize="18sp"
-        android:maxWidth="250dp"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/countryR"
+        android:layout_alignParentStart="true" />
 
     <RatingBar
         android:id="@+id/ratingR"
@@ -87,23 +78,32 @@
         android:theme = "@style/RatingBar"
         android:numStars="5"
         android:isIndicator="false"
+        style = "@android:style/Widget.Material.Light.RatingBar.Small"
+        android:layout_below="@+id/protagonistR"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/directorR"
+        android:text="Director"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:focusable="false"
+        android:textSize="18sp"
+        android:maxWidth="250dp"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/yearR"
-        android:layout_alignParentEnd="true"
-        style = "@android:style/Widget.Material.Light.RatingBar.Small"/>
+        android:layout_alignEnd="@+id/yearR" />
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="40dp"
-        android:text="DELETE"
-        android:padding="8dp"
-        android:textColor="#fff"
-        android:textSize="20dp"
-        android:background="@color/colorPrimary"
+    <ImageButton
         android:id="@+id/deleteB"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/ratingR"
-        android:textAppearance="@style/TextAppearance.AppCompat" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_black_24dp"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_alignTop="@+id/protagonistR"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

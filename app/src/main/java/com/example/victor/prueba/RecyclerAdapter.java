@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -30,7 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private Context context;
     private List<Film> films = Collections.emptyList();
     private FilmData filmData;
-    private boolean showMore = false;
+    //private boolean showMore;
 
     public RecyclerAdapter(Context context, List<Film> filmList, FilmData filmData){
         inflater=LayoutInflater.from(context);
@@ -44,7 +45,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.content_format,parent,false);
-        MyViewHolder holder = new MyViewHolder(view);
+        final MyViewHolder holder = new MyViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(context, "Toco", Toast.LENGTH_SHORT).show();
+                holder.changeShowMore();
+                showMoreInfo(holder);
+            }
+        });
         return holder;
     }
 
@@ -57,6 +66,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.country.setText(current.getCountry());
         holder.protagonist.setText(current.getProtagonist());
         holder.rate.setRating(current.getCritics_rate());
+        //Paràmetres originalment ocults
+        holder.country.setVisibility(View.GONE);
+        holder.director.setVisibility(View.GONE);
+        holder.protagonist.setVisibility(View.GONE);
+        holder.rate.setVisibility(View.GONE);
+        holder.button.setVisibility(View.GONE);
 
 
 
@@ -74,53 +89,83 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         notifyItemRemoved(position);
     }
 
+    public void changeRating(int position, long Id, Float rating){
+        filmData.changeCriticsRate(Id,rating);
 
-    class MyViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
+    }
+
+    public void showMoreInfo(MyViewHolder holder){
+        if(holder.showMoreActivated()){
+            holder.country.setVisibility(View.VISIBLE);
+            holder.director.setVisibility(View.VISIBLE);
+            holder.protagonist.setVisibility(View.VISIBLE);
+            holder.rate.setVisibility(View.VISIBLE);
+            holder.button.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.country.setVisibility(View.GONE);
+            holder.director.setVisibility(View.GONE);
+            holder.protagonist.setVisibility(View.GONE);
+            holder.rate.setVisibility(View.GONE);
+            holder.button.setVisibility(View.GONE);
+        }
+
+    }
+
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+
         public TextView title,director,country,year,protagonist;
         public RatingBar rate;
-        public Button button;
+        public ImageButton button;
+        public boolean showMore = false;
         public MyViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    Toast.makeText(context, "Clicked item ", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            });
             title = (TextView) itemView.findViewById(R.id.titleR);
             year = (TextView) itemView.findViewById(R.id.yearR);
-
+            showMore = false;
             director = (TextView) itemView.findViewById(R.id.directorR);
             country = (TextView) itemView.findViewById(R.id.countryR);
             protagonist = (TextView) itemView.findViewById(R.id.protagonistR);
             rate = (RatingBar) itemView.findViewById(R.id.ratingR);
-            button = (Button) itemView.findViewById(R.id.deleteB);
-            button.setOnClickListener(this);
+            rate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    changeRating(getPosition(),films.get(getPosition()).getId(),v);
+                }
+            });
+            button = (ImageButton) itemView.findViewById(R.id.deleteB);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Do you really want to delete this film?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    delete(getPosition(),films.get(getPosition()).getId());
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    builder.show();
+                }
+            });
 
         }
-
-        @Override
-        public void onClick(View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Do you really want to delete this film?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            delete(getPosition(),films.get(getPosition()).getId());
-
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-            builder.show();
+        public void changeShowMore(){
+            showMore = !(showMore);
         }
+        public boolean showMoreActivated(){
+            return showMore;
+        }
+
     }
 
 }

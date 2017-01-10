@@ -4,17 +4,91 @@
     android:layout_height="match_parent"
     tools:context="com.example.victor.prueba.AboutFragment">
 
-    <Button
+
+    <TextView
+        android:text="About MyFilmDataBase:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ABOUT"
-        android:padding="8dp"
-        android:textColor="#fff"
-        android:background="@color/colorPrimary"
-        android:textSize="28sp"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/text1"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/text2"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="This app was developed as a project for the Facultat Informàtica de Barcelona of the UPC (Universitat Politécnica de Catalunya) as a requirement for the subject of Interface Design and Interaction."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/text2"
+        android:layout_below="@+id/text1"
+        android:layout_alignParentStart="true"
+        android:textColor="#000"/>
+
+    <TextView
+        android:text="The members of the developement team are:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/text3"
+        android:layout_below="@+id/text2"
+        android:layout_alignParentStart="true"
+        android:textColor="#000"/>
+
+    <TextView
+        android:text="Víctor Hervás Sánchez"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/text4"
+        android:layout_below="@+id/text3"
+        android:layout_alignParentStart="true"
+        android:textColor="#000"/>
+
+    <TextView
+        android:text="Adrián Ruiz Cordón"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/text5"
+        android:layout_below="@+id/text4"
+        android:layout_alignParentStart="true"
+        android:textColor="#000"/>
+
+    <TextView
+        android:text="Latest update: 11/01/2017"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/text6"
+        android:layout_below="@+id/text5"
+        android:layout_alignParentStart="true"
+        android:textColor="#505050"/>
+
+    <TextView
+        android:text="Version 4.2.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/text7"
+        android:layout_below="@+id/text6"
+        android:layout_alignParentStart="true"
+        android:textColor="#505050"/>
 
 
 </RelativeLayout>
