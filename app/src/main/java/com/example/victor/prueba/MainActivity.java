@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         MainFragment fragment = new MainFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment,"MAIN_FRAGMENT");
         fragmentTransaction.commit();
 
 
@@ -82,7 +82,16 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (getSupportFragmentManager().findFragmentByTag("MAIN_FRAGMENT") == null) {
+                MainFragment fragment = new MainFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment,"MAIN_FRAGMENT");
+                fragmentTransaction.commit();
+            }
+            else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -119,7 +128,7 @@ public class MainActivity extends AppCompatActivity
             MainFragment fragment = new MainFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.replace(R.id.fragment_container, fragment,"MAIN_FRAGMENT");
             fragmentTransaction.commit();
         } else if (id == R.id.nav_create) {
             AddFragment fragment = new AddFragment();

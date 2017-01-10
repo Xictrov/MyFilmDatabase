@@ -3,6 +3,7 @@ package com.example.victor.prueba;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,8 @@ public class titleRatingListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("DELETE FILM");
+                builder.setIcon(R.drawable.ic_report_problem_black_24dp);
                 builder.setMessage("Do you really want to delete this film?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
