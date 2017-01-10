@@ -15,7 +15,7 @@ public class Film {
     private String country;
     private int year;
     private String protagonist;
-    private int critics_rate;
+    private Float critics_rate;
 
     private String comment;
 
@@ -67,13 +67,11 @@ public class Film {
         this.protagonist = protagonist;
     }
 
-    public int getCritics_rate() {
+    public float getCritics_rate() {
         return critics_rate;
     }
 
-    public void setCritics_rate(int critics_rate) {
-        this.critics_rate = critics_rate;
-    }
+    public void setCritics_rate(Float critics_rate) { this.critics_rate = critics_rate; }
 
     // Will be used by the ArrayAdapter in the ListView
     @Override

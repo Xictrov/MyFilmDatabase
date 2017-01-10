@@ -101,6 +101,24 @@ public class FilmData {
         return fp;
     }
 
+    public List<Film> searchByTitle(String title) {
+        List<Film> fp = new ArrayList<>();
+
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, null,
+                MySQLiteHelper.COLUMN_TITLE + "= '" + title+"'", null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Film film = cursorToFilm(cursor);
+            fp.add(film);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+
+        return fp;
+    }
+
     public void changeCriticsRate(long filmId, Float criticsRate) {
         Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, null,
                 MySQLiteHelper.COLUMN_ID + "= '" + filmId+"'", null, null, null, null);
@@ -149,7 +167,7 @@ public class FilmData {
         film.setYear(cursor.getInt(3));
         film.setDirector(cursor.getString(4));
         film.setProtagonist(cursor.getString(5));
-        film.setCritics_rate(cursor.getInt(6));
+        film.setCritics_rate(cursor.getFloat(6));
         return film;
     }
 }

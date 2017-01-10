@@ -23,23 +23,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment {
+public class SearchTitleFragment extends Fragment {
     private FilmData filmData;
     private ListView lw;
     private titleRatingListAdapter adapter;
     private List<titleRating> mTitleRatingList;
     private RelativeLayout layout;
-    private boolean submitted = false;
 
-    public SearchFragment() {
+    public SearchTitleFragment() {
         // Required empty public constructor
-
     }
 
 
@@ -74,35 +71,34 @@ public class SearchFragment extends Fragment {
         menuInflater.inflate(R.menu.main, menu);
         final MenuItem searchItem = menu.findItem(R.id.searchBar);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint(getText(R.string.hint));
+        searchView.setQueryHint("Film title");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                List<Film> films = filmData.searchByTitle(query);
+                mTitleRatingList = new ArrayList<>();
+
+                SearchTitleFragment.orderByTitle(films);
+                mTitleRatingList.clear();
+                for (int i=0; i<films.size(); ++i) {
+                    mTitleRatingList.add(new titleRating(i+1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate(), films.get(i).getId()));
+                }
+
+                adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
+
+                lw.setAdapter(adapter);
+
                 searchView.setQuery("", false);
                 //searchView.setIconified(true);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                submitted = true;
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                submitted = false;
-                if (!Objects.equals(newText, "") && !submitted) {
-                    System.out.println("Entra aqui");
-                    List<Film> films = filmData.getAllFilms();
-                    mTitleRatingList = new ArrayList<>();
-                    mTitleRatingList.clear();
-                    for (int i = 0; i < films.size(); ++i) {
-                        if (films.get(i).getProtagonist().contains(newText)) {
-                            mTitleRatingList.add(new titleRating(i + 1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate(), films.get(i).getId()));
-                        }
-                    }
-                    adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
-
-                    lw.setAdapter(adapter);
-                }
+                //textView.setText(newText);
                 return true;
             }
         });
@@ -123,17 +119,6 @@ public class SearchFragment extends Fragment {
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    @Override
-    public void onResume() {
-        filmData.open();
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        filmData.close();
-        super.onPause();
-    }
 
 }
 

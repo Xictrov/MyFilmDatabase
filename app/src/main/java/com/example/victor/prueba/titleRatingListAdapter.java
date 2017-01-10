@@ -51,14 +51,19 @@ public class titleRatingListAdapter extends BaseAdapter {
         TextView vFilmTitle = (TextView) v.findViewById(R.id.filmTitle);
         RatingBar vFilmRating = (RatingBar) v.findViewById(R.id.filmRating);
         ImageButton vDeleteFilm = (ImageButton) v.findViewById(R.id.deleteBtn);
+        final TextView vFilmRateNumer = (TextView) v.findViewById(R.id.filmRateNumber);
 
         vFilmTitle.setText(mTitleRatingList.get(position).getFilmTitle());
         vFilmRating.setRating(mTitleRatingList.get(position).getRate());
+        Float notaPeli = (mTitleRatingList.get(position).getRate()*2);
+        vFilmRateNumer.setText(notaPeli.toString());
 
         vFilmRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 filmdata.changeCriticsRate(mTitleRatingList.get(position).getFilmId(),rating);
+                Float aux = rating*2;
+                vFilmRateNumer.setText(aux.toString());
             }
         });
 
