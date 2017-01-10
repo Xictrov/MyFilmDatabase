@@ -24,6 +24,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
+        android:layout_avobe="@+id/directorR"
+>>>>>>> a6ac1b4457629f0fef0b1a98305e60c8e3e6e810
         android:layout_alignStart="@+id/directorR"
         android:layout_marginTop="16dp"
         android:id="@+id/yearR"
@@ -105,4 +109,8 @@
         android:layout_below="@+id/ratingR"
         android:textAppearance="@style/TextAppearance.AppCompat" />
 
+<<<<<<< HEAD
 </RelativeLayout>
+=======
+</RelativeLayout>
+>>>>>>> a6ac1b4457629f0fef0b1a98305e60c8e3e6e810
