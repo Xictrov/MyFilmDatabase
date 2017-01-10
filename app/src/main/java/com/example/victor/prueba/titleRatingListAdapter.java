@@ -72,6 +72,8 @@ public class titleRatingListAdapter extends BaseAdapter {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 filmdata.deleteFilm(mTitleRatingList.get(position).getFilmId());
+                                mTitleRatingList.remove(position);
+                                titleRatingListAdapter.this.notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

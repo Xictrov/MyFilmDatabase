@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/filmRating"
         android:numStars="5"
-        android:stepSize="1"
+        android:stepSize="0.5"
         style = "@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
         android:isIndicator="false"
         android:layout_alignParentTop="true"

@@ -54,15 +54,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         protagonist = (EditText) v.findViewById(R.id.addProtagonist);
         rate = (RatingBar) v.findViewById(R.id.addRating);
         layout = (RelativeLayout) v.findViewById(R.id.addLayout);
-        layout.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View view, MotionEvent ev)
-            {
-                hideKeyboard(view);
-                return false;
-            }
-        });
         return v;
     }
 
@@ -89,7 +80,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         year.setText("");
         protagonist.setText("");
         rate.setRating(0);
-        Toast.makeText(getContext(), "Film added!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Film added!", Toast.LENGTH_SHORT).show();
     }
 
     protected void hideKeyboard(View view)
