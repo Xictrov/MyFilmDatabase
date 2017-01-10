@@ -4,14 +4,18 @@ import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 
 import java.util.Collections;
@@ -27,6 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private Context context;
     private List<Film> films = Collections.emptyList();
     private FilmData filmData;
+    private boolean showMore = false;
 
     public RecyclerAdapter(Context context, List<Film> filmList, FilmData filmData){
         inflater=LayoutInflater.from(context);
@@ -41,7 +46,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.content_format,parent,false);
         MyViewHolder holder = new MyViewHolder(view);
-
         return holder;
     }
 
@@ -49,11 +53,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Film current = films.get(position);
         holder.title.setText(String.valueOf(current.getTitle()));
+        holder.year.setText(Integer.toString(current.getYear()));
         holder.director.setText(current.getDirector());
         holder.country.setText(current.getCountry());
-        holder.year.setText(Integer.toString(current.getYear()));
         holder.protagonist.setText(current.getProtagonist());
         holder.rate.setRating(current.getCritics_rate());
+
+
 
     }
 
@@ -69,16 +75,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         notifyItemRemoved(position);
     }
 
+
     class MyViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
         public TextView title,director,country,year,protagonist;
         public RatingBar rate;
         public Button button;
         public MyViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    Toast.makeText(context, "Clicked item ", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
             title = (TextView) itemView.findViewById(R.id.titleR);
+            year = (TextView) itemView.findViewById(R.id.yearR);
+
             director = (TextView) itemView.findViewById(R.id.directorR);
             country = (TextView) itemView.findViewById(R.id.countryR);
-            year = (TextView) itemView.findViewById(R.id.yearR);
             protagonist = (TextView) itemView.findViewById(R.id.protagonistR);
             rate = (RatingBar) itemView.findViewById(R.id.ratingR);
             button = (Button) itemView.findViewById(R.id.deleteB);
@@ -107,4 +123,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             builder.show();
         }
     }
+
 }
