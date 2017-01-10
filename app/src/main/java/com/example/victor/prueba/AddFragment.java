@@ -48,6 +48,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         button = (Button) v.findViewById(R.id.btnOk);
         button.setOnClickListener(this);
         title = (EditText) v.findViewById(R.id.addTitle);
+        title.requestFocus();
+        title.setFocusable(true);
         director = (EditText) v.findViewById(R.id.addDirector);
         country = (EditText) v.findViewById(R.id.addCountry);
         year = (EditText) v.findViewById(R.id.addYear);
@@ -83,9 +85,15 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         Toast.makeText(getActivity(), "Film added!", Toast.LENGTH_SHORT).show();
     }
 
-    protected void hideKeyboard(View view)
-    {
-        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    public void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager)getActivity(). getSystemService(Activity.INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
     }
+
+    public void showInputMethod() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
 }
