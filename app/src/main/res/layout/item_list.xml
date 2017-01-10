@@ -6,34 +6,6 @@
     android:paddingTop="10dp">
 
 
-    <TextView
-        android:text="@string/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:id="@+id/filmTitle"
-        android:focusableInTouchMode="false"
-        android:clickable="false"
-        android:focusable="false"
-        android:maxWidth="250dp"
-        android:textColor="#000"
-        android:gravity="center_vertical"
-        android:layout_alignTop="@+id/deleteBtn"
-        android:textSize="18sp"
-        android:layout_alignParentStart="true" />
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/filmRating"
-        android:numStars="5"
-        android:stepSize="0.5"
-        style = "@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
-        android:isIndicator="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="18dp" />
-
     <ImageButton
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
@@ -41,9 +13,37 @@
         android:paddingRight="10dp"
         android:src="@drawable/ic_delete_black_24dp"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_below="@+id/filmRating"
-        android:layout_alignEnd="@+id/filmRating"
-        android:layout_alignStart="@+id/filmRating"
-        android:onClick="onClick (titleRatingListAdapter)"/>
+        android:onClick="onClick (titleRatingListAdapter)"
+        android:layout_alignBottom="@+id/filmRating"
+        android:layout_alignParentEnd="true" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/filmRating"
+        android:numStars="5"
+        android:stepSize="1"
+        style = "@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+        android:isIndicator="false"
+        android:layout_marginTop="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="@string/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/filmTitle"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:focusable="false"
+        android:maxWidth="250dp"
+        android:textColor="#000"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:layout_alignTop="@+id/deleteBtn"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
