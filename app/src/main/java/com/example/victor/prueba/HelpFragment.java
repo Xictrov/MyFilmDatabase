@@ -38,10 +38,11 @@ public class HelpFragment extends Fragment {
         ListView viewL = (ListView) view.findViewById(R.id.listHelp);
         viewL.setAdapter(adapter);
         adapter.add("Welcome to the Help option of the app. The following content explains the features of this app.");
-        adapter.add("-In option Home, you can view all films ordered alfabeticaly. For each film, you can see the Title and the valoration");
+        adapter.add("-In option Home, you can view all films ordered alphabetically. For each film, you can see the Title and its critic's rate");
         adapter.add("-In the Film Data Base option, you can view all films ordered by year. You will see films' Title and Year of release. If you click in one of them, all of its information will be shown");
         adapter.add("-To create a new film, select the Add new film option and enter the corresponding information");
-        adapter.add("Film fileds and more:");
+        //
+        adapter.add("Film fields and more:");
         adapter.add("-The film Title field corresponds on the title of the film");
         adapter.add("-The film Year field corresponds on the release year of the film");
         adapter.add("-The film Director field corresponds on the film director");
