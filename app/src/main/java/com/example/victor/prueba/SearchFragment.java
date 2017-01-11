@@ -99,6 +99,7 @@ public class SearchFragment extends Fragment {
                 if (!Objects.equals(newText, "") && !submitted) {
                     querySize=0;
                     List<Film> films = filmData.getAllFilms();
+                    SearchFragment.orderByTitle(films);
                     mTitleRatingList = new ArrayList<>();
                     mTitleRatingList.clear();
                     for (int i = 0; i < films.size(); ++i) {

@@ -76,11 +76,10 @@ public class MainFragment extends Fragment {
         List<Film> values = filmData.getAllFilms();
 
         if (values.size() == 0) {
-            String[] newFilm = new String[]{"Toy Story", "John Lasseter", "Rocky Horror Picture Show", "Jim Sharman", "The Godfather", "Francis Ford Coppola", "Blade Runner", "Ridley Scott"};
-            for (int i = 0; i < newFilm.length; i += 2) {
-                // save the new film to the database
-                filmData.createFilm(newFilm[i], newFilm[i + 1], "Spain", 2014, "Victor Hervas", (float) 3);
-            }
+            filmData.createFilm("V for Vendetta", "James McTeigue", "United States", 2005, "Natalie Portman", (float) 5);
+            filmData.createFilm("Hachi: A Dog's Tale", "Lasse Hällstrom", "United States", 2009, "Richard Gere", (float) 5);
+            filmData.createFilm("Mr. Nobody", "Jaco Van Dormael", "Belgium", 2009, "Jared Leto", (float) 4);
+            filmData.createFilm("Dr. Strange", "Scott Derrickson", "United States", 2016, "Benedict Cumberbatch", (float) 4.5);
         }
 
         values = filmData.getAllFilms();
