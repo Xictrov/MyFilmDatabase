@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.Rating;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,10 @@ import android.view.View.OnClickListener;
 import android.app.Activity;
 import android.support.v7.widget.AppCompatButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Objects;
 
 
 public class AddFragment extends Fragment implements View.OnClickListener {
@@ -26,6 +30,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     EditText title, director, country, year, protagonist;
     RatingBar rate;
+    TextView rateNumber;
     RelativeLayout layout;
 
     public AddFragment() {
@@ -55,9 +60,20 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         year = (EditText) v.findViewById(R.id.addYear);
         protagonist = (EditText) v.findViewById(R.id.addProtagonist);
         rate = (RatingBar) v.findViewById(R.id.addRating);
+        rateNumber = (TextView) v.findViewById(R.id.addRateNumber);
+
+        rate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                Float aux = rating*2;
+                rateNumber.setText(aux.toString());
+            }
+        });
+
         layout = (RelativeLayout) v.findViewById(R.id.addLayout);
         return v;
     }
+
 
     @Override
     public void onResume() {
@@ -73,16 +89,42 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        filmData.createFilm(title.getText().toString(), director.getText().toString(),
-                country.getText().toString(), Integer.parseInt(year.getText().toString()),
-                protagonist.getText().toString(), rate.getRating());
-        title.setText("");
-        director.setText("");
-        country.setText("");
-        year.setText("");
-        protagonist.setText("");
-        rate.setRating(0);
-        Toast.makeText(getActivity(), "Film added!", Toast.LENGTH_SHORT).show();
+        String eTitle = title.getText().toString();
+        String eDirector = director.getText().toString();
+        String eCountry = country.getText().toString();
+        String eYear = year.getText().toString();
+        String eProtagonist = protagonist.getText().toString();
+        if (Objects.equals(eTitle, "")) {
+            title.setError("The film must have a title!");
+        }
+        if (Objects.equals(eDirector, "")) {
+            director.setError("Nobody directed the film?");
+        }
+        if (Objects.equals(eCountry, "")) {
+            country.setError("Where was the film released?");
+        }
+        if (Objects.equals(eYear, "")) {
+            year.setError("In which year came out?");
+        }
+        if (Objects.equals(eProtagonist, "")) {
+            protagonist.setError("Who was the main actor/actress?");
+        }
+        if (!Objects.equals(eTitle, "") && !Objects.equals(eDirector, "") &&
+                !Objects.equals(eCountry, "") && !Objects.equals(eYear, "") &&
+                !Objects.equals(eProtagonist, "")) {
+            filmData.createFilm(eTitle, eDirector,
+                    eCountry, Integer.parseInt(eYear),
+                    eProtagonist, rate.getRating());
+            title.setText("");
+            director.setText("");
+            country.setText("");
+            year.setText("");
+            protagonist.setText("");
+            rate.setRating(0);
+            title.requestFocus();
+            Toast.makeText(getActivity(), "Film added to the database!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void showSoftKeyboard(View view) {

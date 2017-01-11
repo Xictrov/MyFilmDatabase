@@ -36,6 +36,8 @@ public class SearchFragment extends Fragment {
     private List<titleRating> mTitleRatingList;
     private RelativeLayout layout;
     private boolean submitted = false;
+    private int sizeBefore;
+    private int querySize;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -78,6 +80,10 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                querySize = query.length();
+                if (mTitleRatingList.size() == 0) {
+                    Toast.makeText(getActivity(), "Your search has no result!", Toast.LENGTH_SHORT).show();
+                }
                 searchView.setQuery("", false);
                 //searchView.setIconified(true);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -88,9 +94,10 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                sizeBefore = newText.length()+1;
                 submitted = false;
                 if (!Objects.equals(newText, "") && !submitted) {
-                    System.out.println("Entra aqui");
+                    querySize=0;
                     List<Film> films = filmData.getAllFilms();
                     mTitleRatingList = new ArrayList<>();
                     mTitleRatingList.clear();
@@ -101,6 +108,11 @@ public class SearchFragment extends Fragment {
                     }
                     adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
 
+                    lw.setAdapter(adapter);
+                }
+                if (Objects.equals(newText, "") && !submitted && (sizeBefore-1 == querySize)) {
+                    mTitleRatingList = new ArrayList<>();
+                    adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
                     lw.setAdapter(adapter);
                 }
                 return true;

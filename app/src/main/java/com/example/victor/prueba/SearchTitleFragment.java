@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -30,10 +33,14 @@ import java.util.List;
  */
 public class SearchTitleFragment extends Fragment {
     private FilmData filmData;
-    private ListView lw;
-    private titleRatingListAdapter adapter;
-    private List<titleRating> mTitleRatingList;
+    private RecyclerView MyRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private List<Film> mFilmList = new ArrayList<>();
     private RelativeLayout layout;
+    private boolean submitted = false;
+    private int sizeBefore;
+    private int querySize;
 
     public SearchTitleFragment() {
         // Required empty public constructor
@@ -47,22 +54,14 @@ public class SearchTitleFragment extends Fragment {
         filmData = new FilmData(getActivity().getApplicationContext());
         filmData.open();
 
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
-        lw = (ListView) view.findViewById(R.id.listsearch);
-        layout = (RelativeLayout) view.findViewById(R.id.searchLayout);
-        layout.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View view, MotionEvent ev)
-            {
-                hideKeyboard(view);
-                return false;
-            }
-        });
+        View v = inflater.inflate(R.layout.fragment_recycler, container, false);
+        MyRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view);
+        MyRecyclerView.setHasFixedSize(true);
+
 
         setHasOptionsMenu(true);
 
-        return view;
+        return v;
     }
 
 
@@ -75,39 +74,66 @@ public class SearchTitleFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-                List<Film> films = filmData.searchByTitle(query);
-                mTitleRatingList = new ArrayList<>();
-
-                SearchTitleFragment.orderByTitle(films);
-                mTitleRatingList.clear();
-                for (int i=0; i<films.size(); ++i) {
-                    mTitleRatingList.add(new titleRating(i+1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate(), films.get(i).getId()));
+                querySize = query.length();
+                if (mFilmList.size() == 0) {
+                    Toast.makeText(getActivity(), "Your search has no result!", Toast.LENGTH_SHORT).show();
                 }
-
-                adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
-
-                lw.setAdapter(adapter);
-
                 searchView.setQuery("", false);
                 //searchView.setIconified(true);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                submitted = true;
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //textView.setText(newText);
+                submitted = false;
+                if (!Objects.equals(newText, "") && !submitted) {
+                    querySize=0;
+                    mLayoutManager = new LinearLayoutManager(getActivity());
+                    MyRecyclerView.setLayoutManager(mLayoutManager);
+
+                    List<Film> films = filmData.getAllFilms();
+                    SearchTitleFragment.orderByYear(films);
+
+                    mFilmList.clear();
+                    for (int i=0; i<films.size(); ++i) {
+                        if (films.get(i).getTitle().contains(newText)) {
+                            Film filmi = new Film();
+                            filmi.setId(films.get(i).getId());
+                            filmi.setTitle(films.get(i).getTitle());
+                            filmi.setDirector(films.get(i).getDirector());
+                            filmi.setCountry(films.get(i).getCountry());
+                            filmi.setYear(films.get(i).getYear());
+                            filmi.setProtagonist(films.get(i).getProtagonist());
+                            filmi.setCritics_rate(films.get(i).getCritics_rate());
+                            mFilmList.add(filmi);
+                        }
+                    }
+
+                    mAdapter = new RecyclerAdapter(getActivity(),mFilmList,filmData);
+                    MyRecyclerView.setAdapter(mAdapter);
+                }
+
+                if (Objects.equals(newText, "") && !submitted && (newText.length() == querySize)) {
+                    mLayoutManager = new LinearLayoutManager(getActivity());
+                    MyRecyclerView.setLayoutManager(mLayoutManager);
+                    mFilmList.clear();
+                    mAdapter = new RecyclerAdapter(getActivity(),mFilmList,filmData);
+                    MyRecyclerView.setAdapter(mAdapter);
+                }
                 return true;
             }
         });
     }
 
-    private static void orderByTitle(List<Film> lf) {
+
+
+    private static void orderByYear(List<Film> lf) {
         class ComparatorFilms implements Comparator<Film> {
             public int compare(Film a, Film b) {
-                return a.getTitle().compareTo(b.getTitle());
+                return b.getYear()-a.getYear();
             }
         }
         Collections.sort(lf, new ComparatorFilms());

@@ -19,9 +19,9 @@
         <requestFocus />
     </EditText>
 
-<EditText
+    <EditText
         android:id="@+id/addCountry"
-        android:hint = "Country"
+        android:hint = "@string/country"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_below="@+id/addTitle"
@@ -29,7 +29,7 @@
 
     <EditText
         android:id="@+id/addProtagonist"
-        android:hint = "Protagonist"
+        android:hint = "@string/protagonist"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_below="@+id/addCountry"
@@ -37,7 +37,7 @@
 
     <EditText
         android:id="@+id/addDirector"
-        android:hint = "Director"
+        android:hint = "@string/director"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -59,21 +59,46 @@
         android:layout_marginEnd="62dp" />
 
     <Button
-        android:text="Add Film"
+        android:text="@string/add_film"
+        android:textColor="#FFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnOk"
         android:onClick="onClick (AddFragment)"
         android:layout_below="@+id/addRating"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="#3F51B5"
+        />
 
     <EditText
         android:id="@+id/addYear"
-        android:hint = "Year"
+        android:hint = "@string/year"
         android:inputType="number"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_below="@+id/addDirector"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="@string/film_critics_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/addProtagonist"
+        android:layout_alignBottom="@+id/addProtagonist"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="49dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addRateNumber"
+        android:layout_marginEnd="13dp"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentEnd="true"
+        android:textSize="18sp"
+        android:text="0.0" />
 
 </RelativeLayout>

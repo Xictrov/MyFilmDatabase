@@ -139,6 +139,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("DELETE FILM");
+                    builder.setIcon(R.drawable.ic_report_problem_black_24dp);
                     builder.setMessage("Do you really want to delete this film?")
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
