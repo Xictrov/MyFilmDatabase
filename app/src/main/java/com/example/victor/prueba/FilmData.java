@@ -86,8 +86,9 @@ public class FilmData {
     public List<Film> searchByActor(String protagonist) {
         List<Film> fp = new ArrayList<>();
 
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, null,
-                MySQLiteHelper.COLUMN_PROTAGONIST + "= '" + protagonist+"'", null, null, null, null);
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, allColumns,
+                MySQLiteHelper.COLUMN_PROTAGONIST + " LIKE  '%" + protagonist + "%'", null, null,
+                null, MySQLiteHelper.COLUMN_PROTAGONIST + " COLLATE NOCASE");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -104,8 +105,9 @@ public class FilmData {
     public List<Film> searchByTitle(String title) {
         List<Film> fp = new ArrayList<>();
 
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, null,
-                MySQLiteHelper.COLUMN_TITLE + "= '" + title+"'", null, null, null, null);
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_FILMS, allColumns,
+                MySQLiteHelper.COLUMN_TITLE + " LIKE  '%" + title + "%'", null, null,
+                null, MySQLiteHelper.COLUMN_TITLE + " COLLATE NOCASE");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

@@ -54,6 +54,7 @@ public class SearchTitleFragment extends Fragment {
         filmData = new FilmData(getActivity().getApplicationContext());
         filmData.open();
 
+
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         MyRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view);
         MyRecyclerView.setHasFixedSize(true);
@@ -94,12 +95,11 @@ public class SearchTitleFragment extends Fragment {
                     mLayoutManager = new LinearLayoutManager(getActivity());
                     MyRecyclerView.setLayoutManager(mLayoutManager);
 
-                    List<Film> films = filmData.getAllFilms();
+                    List<Film> films = filmData.searchByTitle(newText);
                     SearchTitleFragment.orderByYear(films);
 
                     mFilmList.clear();
                     for (int i=0; i<films.size(); ++i) {
-                        if (films.get(i).getTitle().contains(newText)) {
                             Film filmi = new Film();
                             filmi.setId(films.get(i).getId());
                             filmi.setTitle(films.get(i).getTitle());
@@ -109,7 +109,6 @@ public class SearchTitleFragment extends Fragment {
                             filmi.setProtagonist(films.get(i).getProtagonist());
                             filmi.setCritics_rate(films.get(i).getCritics_rate());
                             mFilmList.add(filmi);
-                        }
                     }
 
                     mAdapter = new RecyclerAdapter(getActivity(),mFilmList,filmData);

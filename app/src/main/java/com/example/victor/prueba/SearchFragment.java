@@ -52,8 +52,11 @@ public class SearchFragment extends Fragment {
         filmData = new FilmData(getActivity().getApplicationContext());
         filmData.open();
 
+
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         lw = (ListView) view.findViewById(R.id.listsearch);
+
+
         layout = (RelativeLayout) view.findViewById(R.id.searchLayout);
         layout.setOnTouchListener(new View.OnTouchListener()
         {
@@ -98,14 +101,11 @@ public class SearchFragment extends Fragment {
                 submitted = false;
                 if (!Objects.equals(newText, "") && !submitted) {
                     querySize=0;
-                    List<Film> films = filmData.getAllFilms();
+                    List<Film> films = filmData.searchByActor(newText);
                     SearchFragment.orderByTitle(films);
-                    mTitleRatingList = new ArrayList<>();
                     mTitleRatingList.clear();
                     for (int i = 0; i < films.size(); ++i) {
-                        if (films.get(i).getProtagonist().contains(newText)) {
                             mTitleRatingList.add(new titleRating(i + 1, films.get(i).getTitle(), (float) films.get(i).getCritics_rate(), films.get(i).getId()));
-                        }
                     }
                     adapter = new titleRatingListAdapter(getActivity(), mTitleRatingList, filmData);
 
